@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: crud
+  sleuth:
+    sampler:
+      probability: 0.1
+  data:
+    mongodb:
+      uri: mongodb://crud:crud@localhost:27017/crud
+  output:
+    ansi:
+      enabled: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: beans,env
+server:
+  port: 9005
