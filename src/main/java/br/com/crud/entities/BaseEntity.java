@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(exclude = {"createdAt", "modifiedAt", "receivedAt"})
+@EqualsAndHashCode(exclude = {"createdAt", "modifiedAt"})
 public abstract class BaseEntity {
 
 	private LocalDateTime createdAt;

@@ -1,0 +1,15 @@
+{
+  "address": {
+    "description": "Avenue Leonardo da Vinci",
+    "number": 372,
+    "zipcode": "04313001"
+  },
+  "cpf": 96932378892,
+  "name": "João Pedro",
+  "phones": [
+    {
+      "ddd": 11,
+      "number": 9999378679
+    }
+  ]
+}

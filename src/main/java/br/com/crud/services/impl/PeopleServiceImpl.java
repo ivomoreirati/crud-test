@@ -107,7 +107,14 @@ public class PeopleServiceImpl implements PeopleService {
 	}
 
 	public void deletePeople(String cpf) {
+		if(!validationUtil.isValidCPF(cpf)){
+			throw new PeopleBadRequestException("Please input valid cpf !");
+		}
 		People people = getPeopleByCpf(cpf);
-		this.peopleRepository.delete(people);
+		if(people != null) {
+			this.peopleRepository.delete(people);
+		}else {
+			throw new PeopleBadRequestException("Cpf %s not exists in database", cpf);
+		}
 	}
 }
