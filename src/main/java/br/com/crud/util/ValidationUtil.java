@@ -23,12 +23,10 @@ public class ValidationUtil
     public String isValid(Object obj) {
         Set<ConstraintViolation<Object>> violations = validator.validate(obj);
 
-        String result = violations
+        return violations
                 .stream()
                 .map(s -> "entity entry is invalid: "+ s.getPropertyPath().toString() +" "+ s.getMessage() + " \\")
                 .collect(Collectors.joining());
-
-        return result;
     }
 
     private static int calcularDigito(String str, int[] peso) {
@@ -44,8 +42,8 @@ public class ValidationUtil
     public static boolean isValidCPF(String cpf) {
         if ((cpf==null) || (cpf.length()!=11)) return false;
 
-        Integer digito1 = calcularDigito(cpf.substring(0,9), pesoCPF);
-        Integer digito2 = calcularDigito(cpf.substring(0,9) + digito1, pesoCPF);
-        return cpf.equals(cpf.substring(0,9) + digito1.toString() + digito2.toString());
+        int digito1 = calcularDigito(cpf.substring(0,9), pesoCPF);
+        int digito2 = calcularDigito(cpf.substring(0,9) + digito1, pesoCPF);
+        return cpf.equals(cpf.substring(0,9) + Integer.toString(digito1) + Integer.toString(digito2));
     }
 }

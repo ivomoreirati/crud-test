@@ -1,16 +1,16 @@
 package br.com.crud.repositories;
 
+import br.com.crud.entities.People;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
-
-import org.springframework.data.mongodb.repository.MongoRepository;
-
-import br.com.crud.entities.People;
-
 public interface PeopleRepository extends MongoRepository<People, Integer> {
 
-	Optional<People> findPeopleByCpf(final String cpf);
+	Optional<People> findOneByCpf(final String cpf);
+	Optional<List<People>> findAllByCpf(final String cpf);
+	void deleteAllByCpf(final List<People> peopleList);
 
 }

@@ -1,15 +1,5 @@
 package br.com.crud.services.impl;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import br.com.crud.dto.PeopleDTO;
 import br.com.crud.entities.People;
 import br.com.crud.exceptions.PeopleBadRequestException;
@@ -17,6 +7,15 @@ import br.com.crud.repositories.PeopleRepository;
 import br.com.crud.services.PeopleService;
 import br.com.crud.util.DateUtil;
 import br.com.crud.util.ValidationUtil;
+import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PeopleServiceImpl implements PeopleService {
@@ -38,7 +37,7 @@ public class PeopleServiceImpl implements PeopleService {
 		if(!validationUtil.isValid(peopleDTO).equals("")){
 			throw new PeopleBadRequestException(validationUtil.isValid(peopleDTO));
 		}
-		if(!validationUtil.isValidCPF(peopleDTO.getCpf())){
+		if(!ValidationUtil.isValidCPF(peopleDTO.getCpf())){
 			throw new PeopleBadRequestException("Please input valid cpf !");
 		}
 		createDBPeople(peopleDTO);
@@ -64,7 +63,7 @@ public class PeopleServiceImpl implements PeopleService {
 	public People updatePeople(PeopleDTO peopleDTO, String cpf) {
 		logger.debug("PeopleService updatePeople - PeopleDTO request {}, id {}", peopleDTO, cpf);
 
-		if(!validationUtil.isValidCPF(cpf)){
+		if(!ValidationUtil.isValidCPF(cpf)){
 			throw new PeopleBadRequestException("Please input valid cpf !");
 		}
 
@@ -98,8 +97,8 @@ public class PeopleServiceImpl implements PeopleService {
 
 	public People getPeopleByCpf(String cpf) {
 		logger.debug("PeopleService getPeopleByCpf - cpf {}", cpf);
-		Optional<People> query = this.peopleRepository.findPeopleByCpf(cpf);
-		return query.orElse(null);
+		Optional<People> people = this.peopleRepository.findOneByCpf(cpf);
+		return people.orElse(null);
 	}
 
 	public List<People> getPeoples() {
@@ -107,12 +106,12 @@ public class PeopleServiceImpl implements PeopleService {
 	}
 
 	public void deletePeople(String cpf) {
-		if(!validationUtil.isValidCPF(cpf)){
+		if(!ValidationUtil.isValidCPF(cpf)){
 			throw new PeopleBadRequestException("Please input valid cpf !");
 		}
-		People people = getPeopleByCpf(cpf);
-		if(people != null) {
-			this.peopleRepository.delete(people);
+		List<People> peopleList = this.peopleRepository.findAllByCpf(cpf).orElse(null);
+		if(peopleList !=null) {
+			this.peopleRepository.deleteAll(peopleList);
 		}else {
 			throw new PeopleBadRequestException("Cpf %s not exists in database", cpf);
 		}

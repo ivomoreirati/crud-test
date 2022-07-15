@@ -29,7 +29,6 @@ public class PeopleDTO
 	@ApiModelProperty(dataType = "String", required = true, example = "João Pedro")
 	private String name;
 
-	@ApiModelProperty(dataType = "List")
 	private List<Phone> phones = new ArrayList<>();
 
 	@ApiModelProperty(dataType = "Address")

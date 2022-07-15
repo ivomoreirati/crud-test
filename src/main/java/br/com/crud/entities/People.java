@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,6 +22,9 @@ import lombok.EqualsAndHashCode;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Document(collection = "people")
 public class People extends BaseEntity {
+
+	@Id
+	private String id;
 
 	@NotNull
 	@NotEmpty

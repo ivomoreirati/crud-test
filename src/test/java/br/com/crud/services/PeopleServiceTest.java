@@ -107,14 +107,14 @@ public class PeopleServiceTest
 
     @Test
     public void delete() {
-        when(peopleRepository.findPeopleByCpf(CPF)).thenReturn(Optional.of(people));
+        when(peopleRepository.findOneByCpf(CPF)).thenReturn(Optional.of(people));
         this.service.deletePeople(CPF);
         verify(this.peopleRepository).delete(Mockito.any());
     }
 
     @Test
     public void getById() {
-        when(this.peopleRepository.findPeopleByCpf(CPF)).thenReturn(Optional.of(people));
+        when(this.peopleRepository.findOneByCpf(CPF)).thenReturn(Optional.of(people));
         People people = this.service.getPeopleByCpf(CPF);
         assertNotNull(people);
     }
